@@ -1,0 +1,95 @@
+@page
+@model LoginPageExample.Pages.HRMModel
+@{
+    ViewData["Title"] = "Human Resource Management";
+}
+
+<div class="container mt-4">
+    <h1>@ViewData["Title"]</h1>
+
+    <!-- Section Cards -->
+    <div class="row mb-4">
+        <div class="col-md-3">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Total Employees</h5>
+                    <p class="card-text">@Model.TotalEmployees</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Departments</h5>
+                    <p class="card-text">@Model.TotalDepartments</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Average Salary</h5>
+                    <p class="card-text">@Model.AverageSalary.ToString("C")</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Open Positions</h5>
+                    <p class="card-text">@Model.OpenPositions</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Employee Directory -->
+    <div class="card mb-4">
+        <div class="card-header d-flex justify-content-between align-items-center">
+            <h2>Employee Directory</h2>
+            <form method="get" class="d-flex align-items-center" role="search">
+                <div class="form-group mb-0">
+                    <label for="departmentFilter" class="sr-only">Filter by Department</label>
+                    <select class="form-control" id="departmentFilter" asp-for="SelectedDepartment" asp-items="Model.DepartmentList">
+                    </select>
+                </div>
+            </form>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Department</th>
+                            <th>Role</th>
+                            <th>Address</th>
+                            <th>Phone</th>
+                            <th>Salary</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var employee in Model.Employees)
+                        {
+                            <tr>
+                                <td>@employee.Name</td>
+                                <td>@employee.Department</td>
+                                <td>@employee.Role</td>
+                                <td>@employee.Address</td>
+                                <td>@employee.Phone</td>
+                                <td>@employee.Salary.ToString("C")</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        const dep = document.getElementById('departmentFilter');
+        if (dep) dep.addEventListener('change', function () { this.form.submit(); });
+    </script>
+}

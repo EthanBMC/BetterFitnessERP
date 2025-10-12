@@ -1,0 +1,43 @@
+﻿@page
+@model LoginPageExample.Pages.IndexModel
+@{
+    ViewData["Title"] = "Login";
+}
+
+<div class="d-flex justify-content-center align-items-center" style="min-height:60vh;">
+    <div class="card p-4" style="max-width:420px; width:100%;">
+        <div class="text-center mb-3">
+            <!-- Use project image from wwwroot/images -->
+            <img src="~/images/BetterFitness.jpg" alt="Company logo" class="img-fluid" style="max-height:96px; object-fit:contain;" />
+        </div>
+
+        <h3 class="text-center mb-3">Sign in</h3>
+
+        <form method="post" novalidate>
+            <div class="mb-3">
+                <label asp-for="Email" class="form-label">Email</label>
+                <input asp-for="Email" class="form-control" autocomplete="username" />
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="Password" class="form-label">Password</label>
+                <input asp-for="Password" type="password" class="form-control" autocomplete="current-password" />
+                <span asp-validation-for="Password" class="text-danger"></span>
+            </div>
+
+            <div class="d-grid mb-2">
+                <button type="submit" class="btn btn-primary">Login</button>
+            </div>
+
+            @if (!string.IsNullOrEmpty(Model.ErrorMessage))
+            {
+                <div class="alert alert-danger" role="alert">@Model.ErrorMessage</div>
+            }
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
