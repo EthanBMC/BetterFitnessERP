@@ -1,76 +1,76 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using System.ComponentModel.DataAnnotations;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using BetterFitnessERP.Models;
+using BetterFitnessERP.Services;
 
-namespace LoginPageExample.Pages
+namespace BetterFitnessERP.Pages
 {
-    public class Employee
-    {
-        public string? Name { get; set; }
-        public string? Department { get; set; }
-        public string? Role { get; set; }
-        public string? Address { get; set; }
-        public string? Phone { get; set; }
-        public decimal Salary { get; set; }
-    }
-
-    [Authorize]
     public class HRMModel : PageModel
     {
-        // Properties for section cards
-        public int TotalEmployees { get; set; }
-        public int TotalDepartments { get; set; }
-        public decimal AverageSalary { get; set; }
-        public int OpenPositions { get; set; }
+        private readonly IEmployeeRepository _repo;
 
-        // Employee directory properties
-    public List<Employee> Employees { get; set; } = new List<Employee>();
-    public List<SelectListItem> DepartmentList { get; set; } = new List<SelectListItem>();
-    [BindProperty(SupportsGet = true)]
-    public string? SelectedDepartment { get; set; }
+        public HRMModel(IEmployeeRepository repo)
+        {
+            _repo = repo ?? throw new ArgumentNullException(nameof(repo));
+        }
+
+        public List<Employee> Employees { get; set; } = new List<Employee>();
+        public List<string> Departments { get; set; } = new List<string>();
+
+        public int TotalEmployees { get; set; }
+        public int DeptCount { get; set; }
+        public decimal AvgSalary { get; set; }
+        public decimal MonthlyPayroll { get; set; }
+
+        [BindProperty(SupportsGet = true)]
+        public string SearchDept { get; set; }
+
+        [BindProperty]
+        public Employee InputEmployee { get; set; }
 
         public void OnGet()
         {
-            // Initialize sample data
-            InitializeSampleData();
+            Departments = _repo.GetDepartments().ToList();
 
-            // Filter employees if department is selected
-            if (!string.IsNullOrEmpty(SelectedDepartment))
-            {
-                Employees = Employees.Where(e => e.Department == SelectedDepartment).ToList();
-            }
+            var query = string.IsNullOrWhiteSpace(SearchDept) || SearchDept == "All"
+                ? _repo.GetAll()
+                : _repo.GetByDepartment(SearchDept);
 
-            // Calculate statistics (guard against empty lists)
-            TotalEmployees = Employees.Count;
-            TotalDepartments = Employees.Select(e => e.Department).Where(d => !string.IsNullOrEmpty(d)).Distinct().Count();
-            AverageSalary = Employees.Any() ? Employees.Average(e => e.Salary) : 0m;
-            OpenPositions = 5; // Hardcoded sample value
+            Employees = query.OrderBy(e => e.LastName).ThenBy(e => e.FirstName).ToList();
+
+            ComputeMetrics();
         }
 
-        private void InitializeSampleData()
+        public IActionResult OnPost()
         {
-            // Initialize sample employees
-            Employees = new List<Employee>
+            Departments = _repo.GetDepartments().ToList();
+
+            if (!ModelState.IsValid)
             {
-                new Employee { Name = "John Doe", Department = "IT", Role = "Software Developer", Address = "123 Main St", Phone = "555-0101", Salary = 85000 },
-                new Employee { Name = "Jane Smith", Department = "HR", Role = "HR Manager", Address = "456 Oak Ave", Phone = "555-0102", Salary = 75000 },
-                new Employee { Name = "Bob Wilson", Department = "Finance", Role = "Accountant", Address = "789 Pine Rd", Phone = "555-0103", Salary = 65000 },
-                new Employee { Name = "Alice Brown", Department = "IT", Role = "System Admin", Address = "321 Elm St", Phone = "555-0104", Salary = 70000 },
-                new Employee { Name = "Charlie Davis", Department = "Marketing", Role = "Marketing Manager", Address = "654 Maple Dr", Phone = "555-0105", Salary = 72000 }
-            };
+                var query = string.IsNullOrWhiteSpace(SearchDept) || SearchDept == "All"
+                    ? _repo.GetAll()
+                    : _repo.GetByDepartment(SearchDept);
 
-            // Initialize department list for dropdown
-            DepartmentList = Employees
-                .Select(e => e.Department)
-                .Where(d => !string.IsNullOrEmpty(d))
-                .Distinct()
-                .Select(d => new SelectListItem { Value = d!, Text = d! })
-                .ToList();
+                Employees = query.OrderBy(e => e.LastName).ThenBy(e => e.FirstName).ToList();
+                ComputeMetrics();
+                return Page();
+            }
 
-            // Prepend an All Departments option
-            DepartmentList.Insert(0, new SelectListItem { Value = "", Text = "All Departments" });
+            _repo.Add(InputEmployee);
+
+            return RedirectToPage(new { SearchDept = this.SearchDept });
+        }
+
+        private void ComputeMetrics()
+        {
+            TotalEmployees = Employees.Count;
+            DeptCount = Employees.Select(e => e.Department).Where(d => !string.IsNullOrWhiteSpace(d)).Distinct().Count();
+            var totalSalary = Employees.Sum(e => (decimal?)e.Salary) ?? 0m;
+            AvgSalary = TotalEmployees > 0 ? Math.Round(totalSalary / TotalEmployees, 2) : 0m;
+            MonthlyPayroll = Math.Round(totalSalary / 12m, 2);
         }
     }
 }
