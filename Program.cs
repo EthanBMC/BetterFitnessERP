@@ -1,9 +1,13 @@
 using Microsoft.AspNetCore.Authentication.Cookies;
+using BetterFitnessERP.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddRazorPages();
+
+// Register in-memory employee repository
+builder.Services.AddSingleton<IEmployeeRepository, InMemoryEmployeeRepository>();
 
 // Add cookie authentication
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
