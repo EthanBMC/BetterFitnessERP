@@ -1,95 +1,107 @@
 @page
-@model LoginPageExample.Pages.HRMModel
+@model BetterFitnessERP.Pages.HRMModel
 @{
-    ViewData["Title"] = "Human Resource Management";
+    ViewData["Title"] = "HRM";
 }
 
-<div class="container mt-4">
-    <h1>@ViewData["Title"]</h1>
+<h2>HRM</h2>
 
-    <!-- Section Cards -->
-    <div class="row mb-4">
-        <div class="col-md-3">
-            <div class="card">
-                <div class="card-body">
-                    <h5 class="card-title">Total Employees</h5>
-                    <p class="card-text">@Model.TotalEmployees</p>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-3">
-            <div class="card">
-                <div class="card-body">
-                    <h5 class="card-title">Departments</h5>
-                    <p class="card-text">@Model.TotalDepartments</p>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-3">
-            <div class="card">
-                <div class="card-body">
-                    <h5 class="card-title">Average Salary</h5>
-                    <p class="card-text">@Model.AverageSalary.ToString("C")</p>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-3">
-            <div class="card">
-                <div class="card-body">
-                    <h5 class="card-title">Open Positions</h5>
-                    <p class="card-text">@Model.OpenPositions</p>
-                </div>
-            </div>
-        </div>
+<form method="get" class="form-inline mb-3">
+    <label for="SearchDept">Filter by Department:</label>
+    <select asp-for="SearchDept" class="form-control mx-2">
+        <option value="All">All</option>
+        @foreach (var d in Model.Departments.Where(x => x != "All"))
+        {
+            <option value="@d" selected="@(d == Model.SearchDept ? "selected" : null)">@d</option>
+        }
+    </select>
+    <button type="submit" class="btn btn-primary">Apply</button>
+</form>
+
+<h4>Add Employee</h4>
+<form method="post">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+    <div class="form-group">
+        <label asp-for="InputEmployee.FirstName"></label>
+        <input asp-for="InputEmployee.FirstName" class="form-control" />
+        <span asp-validation-for="InputEmployee.FirstName" class="text-danger"></span>
     </div>
 
-    <!-- Employee Directory -->
-    <div class="card mb-4">
-        <div class="card-header d-flex justify-content-between align-items-center">
-            <h2>Employee Directory</h2>
-            <form method="get" class="d-flex align-items-center" role="search">
-                <div class="form-group mb-0">
-                    <label for="departmentFilter" class="sr-only">Filter by Department</label>
-                    <select class="form-control" id="departmentFilter" asp-for="SelectedDepartment" asp-items="Model.DepartmentList">
-                    </select>
-                </div>
-            </form>
-        </div>
-        <div class="card-body">
-            <div class="table-responsive">
-                <table class="table table-striped">
-                    <thead>
-                        <tr>
-                            <th>Name</th>
-                            <th>Department</th>
-                            <th>Role</th>
-                            <th>Address</th>
-                            <th>Phone</th>
-                            <th>Salary</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach (var employee in Model.Employees)
-                        {
-                            <tr>
-                                <td>@employee.Name</td>
-                                <td>@employee.Department</td>
-                                <td>@employee.Role</td>
-                                <td>@employee.Address</td>
-                                <td>@employee.Phone</td>
-                                <td>@employee.Salary.ToString("C")</td>
-                            </tr>
-                        }
-                    </tbody>
-                </table>
-            </div>
-        </div>
+    <div class="form-group">
+        <label asp-for="InputEmployee.LastName"></label>
+        <input asp-for="InputEmployee.LastName" class="form-control" />
+        <span asp-validation-for="InputEmployee.LastName" class="text-danger"></span>
     </div>
+
+    <div class="form-group">
+        <label asp-for="InputEmployee.Email"></label>
+        <input asp-for="InputEmployee.Email" class="form-control" />
+        <span asp-validation-for="InputEmployee.Email" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="InputEmployee.Department"></label>
+        <select asp-for="InputEmployee.Department" class="form-control">
+            <option value="">-- Select Department --</option>
+            @foreach (var d in Model.Departments.Where(x => x != "All"))
+            {
+                <option value="@d" selected="@(d == Model.InputEmployee?.Department ? "selected" : null)">@d</option>
+            }
+        </select>
+        <span asp-validation-for="InputEmployee.Department" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="InputEmployee.Salary"></label>
+        <input asp-for="InputEmployee.Salary" class="form-control" />
+        <span asp-validation-for="InputEmployee.Salary" class="text-danger"></span>
+    </div>
+
+    <button type="submit" class="btn btn-success">Save</button>
+</form>
+
+<hr />
+
+<h4>Employees</h4>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Department</th>
+            <th>Email</th>
+            <th class="text-right">Salary</th>
+            <th>Hire Date</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model.Employees.Any())
+        {
+            foreach (var e in Model.Employees)
+            {
+                <tr>
+                    <td>@(e.FirstName) @(e.LastName)</td>
+                    <td>@e.Department</td>
+                    <td>@e.Email</td>
+                    <td class="text-right">@string.Format("{0:C}", e.Salary)</td>
+                    <td>@(e.HireDate?.ToString("yyyy-MM-dd") ?? "-")</td>
+                </tr>
+            }
+        }
+        else
+        {
+            <tr><td colspan="5">No employees found.</td></tr>
+        }
+    </tbody>
+</table>
+
+<div class="mt-3">
+    <strong>Total employees:</strong> @Model.TotalEmployees<br />
+    <strong>Distinct departments in result:</strong> @Model.DeptCount<br />
+    <strong>Average salary:</strong> @string.Format("{0:C}", Model.AvgSalary)<br />
+    <strong>Estimated monthly payroll:</strong> @string.Format("{0:C}", Model.MonthlyPayroll)
 </div>
 
 @section Scripts {
-    <script>
-        const dep = document.getElementById('departmentFilter');
-        if (dep) dep.addEventListener('change', function () { this.form.submit(); });
-    </script>
+    <partial name="_ValidationScriptsPartial" />
 }
