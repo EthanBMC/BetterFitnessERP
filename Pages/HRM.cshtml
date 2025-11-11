@@ -23,20 +23,20 @@
     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
     <div class="form-group">
-        <label asp-for="InputEmployee.FirstName"></label>
-        <input asp-for="InputEmployee.FirstName" class="form-control" />
+        <label asp-for="InputEmployee.FirstName">First Name</label>
+        <input asp-for="InputEmployee.FirstName" class="form-control" placeholder="Enter First Name" />
         <span asp-validation-for="InputEmployee.FirstName" class="text-danger"></span>
     </div>
 
     <div class="form-group">
-        <label asp-for="InputEmployee.LastName"></label>
-        <input asp-for="InputEmployee.LastName" class="form-control" />
+        <label asp-for="InputEmployee.LastName">Last Name</label>
+        <input asp-for="InputEmployee.LastName" class="form-control" placeholder="Enter Last Name" />
         <span asp-validation-for="InputEmployee.LastName" class="text-danger"></span>
     </div>
 
     <div class="form-group">
         <label asp-for="InputEmployee.Email"></label>
-        <input asp-for="InputEmployee.Email" class="form-control" />
+        <input asp-for="InputEmployee.Email" class="form-control" placeholder="Enter Email" />
         <span asp-validation-for="InputEmployee.Email" class="text-danger"></span>
     </div>
 
@@ -54,7 +54,7 @@
 
     <div class="form-group">
         <label asp-for="InputEmployee.Salary"></label>
-        <input asp-for="InputEmployee.Salary" class="form-control" />
+        <input asp-for="InputEmployee.Salary" class="form-control" placeholder="Enter Salary in $" />
         <span asp-validation-for="InputEmployee.Salary" class="text-danger"></span>
     </div>
 
