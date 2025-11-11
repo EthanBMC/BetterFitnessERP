@@ -15,7 +15,7 @@
             <option value="@d" selected="@(d == Model.SearchDept ? "selected" : null)">@d</option>
         }
     </select>
-    <button type="submit" class="btn btn-primary">Apply</button>
+    <button type="submit" class="btn btn-primary mt-3">Apply</button>
 </form>
 
 <h4>Add Employee</h4>
@@ -58,12 +58,12 @@
         <span asp-validation-for="InputEmployee.Salary" class="text-danger"></span>
     </div>
 
-    <button type="submit" class="btn btn-success">Save</button>
+    <button type="submit" class="btn btn-success mt-3">Save</button>
 </form>
 
 <hr />
 
-<h4>Employees</h4>
+<h4>Employee Directory</h4>
 <table class="table table-striped">
     <thead>
         <tr>
