@@ -1,0 +1,21 @@
+using System;
+using System.Collections.Generic;
+using BetterFitnessERP.Models;
+
+namespace BetterFitnessERP.Data
+{
+    public static class DataSeeder
+    {
+        public static IEnumerable<Transaction> GetSampleTransactions()
+        {
+            return new List<Transaction>
+            {
+                new Transaction { Date = DateTime.UtcNow.AddDays(-12), Description = "Monthly Membership Fees", Category = "Membership", Amount = 4500m, IsExpense = false },
+                new Transaction { Date = DateTime.UtcNow.AddDays(-10), Description = "Personal Training Income", Category = "Services", Amount = 1200m, IsExpense = false },
+                new Transaction { Date = DateTime.UtcNow.AddDays(-8), Description = "Treadmill Purchase", Category = "Equipment", Amount = 3200m, IsExpense = true },
+                new Transaction { Date = DateTime.UtcNow.AddDays(-6), Description = "Utilities Payment", Category = "Utilities", Amount = 650m, IsExpense = true },
+                new Transaction { Date = DateTime.UtcNow.AddDays(-3), Description = "Merchandise Sales", Category = "Retail", Amount = 780m, IsExpense = false }
+            };
+        }
+    }
+}
