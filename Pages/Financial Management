@@ -1,0 +1,150 @@
+@page
+@model BetterFitnessERP.Pages.FinancialModel
+@{
+    ViewData["Title"] = "Financial Management";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<div class="row mb-3">
+    <div class="col-md-3">
+        <form method="get" class="form-inline">
+            <div class="mb-2">
+                <label>Category</label>
+                <select class="form-select" asp-for="FilterCategory" asp-items="@(new Microsoft.AspNetCore.Mvc.Rendering.SelectList(Model.Categories))">
+                </select>
+            </div>
+            <div class="mb-2">
+                <label>Type</label>
+                <select class="form-select" asp-for="FilterType">
+                    <option>All</option>
+                    <option>Income</option>
+                    <option>Expense</option>
+                </select>
+            </div>
+            <div class="mb-2">
+                <label>Start</label>
+                <input asp-for="StartDate" class="form-control" type="date" />
+            </div>
+            <div class="mb-2">
+                <label>End</label>
+                <input asp-for="EndDate" class="form-control" type="date" />
+            </div>
+            <div class="mt-2">
+                <button type="submit" class="btn btn-primary">Apply Filters</button>
+                <a asp-page="./Financial" class="btn btn-secondary">Clear</a>
+            </div>
+        </form>
+    </div>
+
+    <div class="col-md-9">
+        <div class="row">
+            <div class="col-md-4">
+                <div class="card text-white bg-success mb-3">
+                    <div class="card-header">Total Revenue</div>
+                    <div class="card-body">
+                        <h5 class="card-title">@string.Format("{0:C}", Model.TotalRevenue)</h5>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card text-white bg-danger mb-3">
+                    <div class="card-header">Total Expense</div>
+                    <div class="card-body">
+                        <h5 class="card-title">@string.Format("{0:C}", Model.TotalExpense)</h5>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card text-white @(Model.NetBalance >= 0 ? "bg-primary" : "bg-secondary") mb-3">
+                    <div class="card-header">Net Balance</div>
+                    <div class="card-body">
+                        <h5 class="card-title">@string.Format("{0:C}", Model.NetBalance)</h5>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<h2>Transactions</h2>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Date</th>
+            <th>Description</th>
+            <th>Category</th>
+            <th class="text-right">Amount</th>
+            <th>Type</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model.Transactions.Any())
+        {
+            foreach (var tx in Model.Transactions)
+            {
+                <tr>
+                    <td>@tx.Date.ToString("yyyy-MM-dd")</td>
+                    <td>@tx.Description</td>
+                    <td>@tx.Category</td>
+                    <td class="text-right">@string.Format("{0:C}", tx.Amount)</td>
+                    <td>@(tx.IsExpense ? "Expense" : "Income")</td>
+                </tr>
+            }
+        }
+        else
+        {
+            <tr>
+                <td colspan="5">No transactions found.</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<hr />
+
+<h2>Add Transaction</h2>
+<form method="post">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+    <div class="mb-2">
+        <label>Date</label>
+        <input asp-for="InputTransaction.Date" class="form-control" type="date" />
+        <span asp-validation-for="InputTransaction.Date" class="text-danger"></span>
+    </div>
+
+    <div class="mb-2">
+        <label>Description</label>
+        <input asp-for="InputTransaction.Description" class="form-control" />
+        <span asp-validation-for="InputTransaction.Description" class="text-danger"></span>
+    </div>
+
+    <div class="mb-2">
+        <label>Category</label>
+        <input asp-for="InputTransaction.Category" class="form-control" list="categoriesList" />
+        <datalist id="categoriesList">
+            @foreach (var c in Model.Categories.Where(c => c != "All"))
+            {
+                <option value="@c" />
+            }
+        </datalist>
+        <span asp-validation-for="InputTransaction.Category" class="text-danger"></span>
+    </div>
+
+    <div class="mb-2">
+        <label>Amount</label>
+        <input asp-for="InputTransaction.Amount" class="form-control" />
+        <span asp-validation-for="InputTransaction.Amount" class="text-danger"></span>
+    </div>
+
+    <div class="mb-2 form-check">
+        <input asp-for="InputTransaction.IsExpense" class="form-check-input" />
+        <label class="form-check-label">Is Expense?</label>
+    </div>
+
+    <button type="submit" class="btn btn-success">Add Transaction</button>
+</form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
