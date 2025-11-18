@@ -9,53 +9,49 @@ build_property.EnforceExtendedAnalyzerRules =
 build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.RootNamespace = LoginPageExample
 build_property.RootNamespace = LoginPageExample
-build_property.ProjectDir = C:\Users\jaker\Desktop\School\Fall2025\MIS555_Cloud\Code\FuckAssERP\BetterFitnessERP\
+build_property.ProjectDir = C:\Users\ethan\OneDrive\Documents\Classes\MIS 555\LoginPageExample\LoginPageExample\
 build_property.EnableComHosting = 
 build_property.EnableGeneratedComInterfaceComImportInterop = 
 build_property.RazorLangVersion = 9.0
 build_property.SupportLocalizedComponentNames = 
 build_property.GenerateRazorMetadataSourceChecksumAttributes = 
-build_property.MSBuildProjectDirectory = C:\Users\jaker\Desktop\School\Fall2025\MIS555_Cloud\Code\FuckAssERP\BetterFitnessERP
+build_property.MSBuildProjectDirectory = C:\Users\ethan\OneDrive\Documents\Classes\MIS 555\LoginPageExample\LoginPageExample
 build_property._RazorSourceGeneratorDebug = 
 build_property.EffectiveAnalysisLevelStyle = 9.0
 build_property.EnableCodeStyleSeverity = 
 
-[c:/Users/jaker/Desktop/School/Fall2025/MIS555_Cloud/Code/FuckAssERP/BetterFitnessERP/Pages/Error.cshtml]
+[C:/Users/ethan/OneDrive/Documents/Classes/MIS 555/LoginPageExample/LoginPageExample/Pages/Error.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcRXJyb3IuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[c:/Users/jaker/Desktop/School/Fall2025/MIS555_Cloud/Code/FuckAssERP/BetterFitnessERP/Pages/Financial.cshtml]
-build_metadata.AdditionalFiles.TargetPath = UGFnZXNcRmluYW5jaWFsLmNzaHRtbA==
-build_metadata.AdditionalFiles.CssScope = 
-
-[c:/Users/jaker/Desktop/School/Fall2025/MIS555_Cloud/Code/FuckAssERP/BetterFitnessERP/Pages/HRM.cshtml]
+[C:/Users/ethan/OneDrive/Documents/Classes/MIS 555/LoginPageExample/LoginPageExample/Pages/HRM.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcSFJNLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[c:/Users/jaker/Desktop/School/Fall2025/MIS555_Cloud/Code/FuckAssERP/BetterFitnessERP/Pages/Index.cshtml]
+[C:/Users/ethan/OneDrive/Documents/Classes/MIS 555/LoginPageExample/LoginPageExample/Pages/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcSW5kZXguY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[c:/Users/jaker/Desktop/School/Fall2025/MIS555_Cloud/Code/FuckAssERP/BetterFitnessERP/Pages/Logout.cshtml]
+[C:/Users/ethan/OneDrive/Documents/Classes/MIS 555/LoginPageExample/LoginPageExample/Pages/Logout.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcTG9nb3V0LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[c:/Users/jaker/Desktop/School/Fall2025/MIS555_Cloud/Code/FuckAssERP/BetterFitnessERP/Pages/Privacy.cshtml]
+[C:/Users/ethan/OneDrive/Documents/Classes/MIS 555/LoginPageExample/LoginPageExample/Pages/Privacy.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcUHJpdmFjeS5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[c:/Users/jaker/Desktop/School/Fall2025/MIS555_Cloud/Code/FuckAssERP/BetterFitnessERP/Pages/Shared/_ValidationScriptsPartial.cshtml]
+[C:/Users/ethan/OneDrive/Documents/Classes/MIS 555/LoginPageExample/LoginPageExample/Pages/Shared/_ValidationScriptsPartial.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcU2hhcmVkXF9WYWxpZGF0aW9uU2NyaXB0c1BhcnRpYWwuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[c:/Users/jaker/Desktop/School/Fall2025/MIS555_Cloud/Code/FuckAssERP/BetterFitnessERP/Pages/_ViewImports.cshtml]
+[C:/Users/ethan/OneDrive/Documents/Classes/MIS 555/LoginPageExample/LoginPageExample/Pages/_ViewImports.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcX1ZpZXdJbXBvcnRzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[c:/Users/jaker/Desktop/School/Fall2025/MIS555_Cloud/Code/FuckAssERP/BetterFitnessERP/Pages/_ViewStart.cshtml]
+[C:/Users/ethan/OneDrive/Documents/Classes/MIS 555/LoginPageExample/LoginPageExample/Pages/_ViewStart.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcX1ZpZXdTdGFydC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[c:/Users/jaker/Desktop/School/Fall2025/MIS555_Cloud/Code/FuckAssERP/BetterFitnessERP/Pages/Shared/_Layout.cshtml]
+[C:/Users/ethan/OneDrive/Documents/Classes/MIS 555/LoginPageExample/LoginPageExample/Pages/Shared/_Layout.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcU2hhcmVkXF9MYXlvdXQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = b-3ypbvbfhjz
