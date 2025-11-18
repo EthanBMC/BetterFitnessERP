@@ -1,0 +1,281 @@
+@page
+@model BetterFitnessERP.Pages.FinancialModel
+@{
+    ViewData["Title"] = "Financial Management";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<!-- Top overview cards (match screenshot style) -->
+<div class="overview-cards mb-4">
+    <div class="row g-3">
+        <div class="col-6 col-md-3">
+            <div class="tile card">
+                <div class="tile-body">
+                    <div class="tile-number">@Model.AccountsCount</div>
+                    <div class="tile-label">Accounts</div>
+                    <div class="tile-sub">Active: @Model.AccountsCount</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-6 col-md-3">
+            <div class="tile card">
+                <div class="tile-body">
+                    <div class="tile-number">@Model.PartnersCount</div>
+                    <div class="tile-label">Partners</div>
+                    <div class="tile-sub">Cust: @Model.CustomersCount · Vend: @Model.VendorsCount</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-6 col-md-3">
+            <div class="tile card">
+                <div class="tile-body">
+                    <div class="tile-number">@Model.InvoicesCount</div>
+                    <div class="tile-label">Invoices</div>
+                    <div class="tile-sub">AR: @string.Format("{0:C}", Model.OpenAR) · AP: @string.Format("{0:C}", Model.OpenAP)</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-6 col-md-3">
+            <div class="tile card">
+                <div class="tile-body">
+                    <div class="tile-number">@string.Format("{0:C}", Model.OpenAR - Model.OpenAP)</div>
+                    <div class="tile-label">Open Balances</div>
+                    <div class="tile-sub">Open AP: @string.Format("{0:C}", Model.OpenAP)</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-6 col-md-3">
+            <div class="tile card">
+                <div class="tile-body">
+                    <div class="tile-number">@Model.PaymentsCount</div>
+                    <div class="tile-label">Payments</div>
+                    <div class="tile-sub">In: @string.Format("{0:C}", Model.TotalRevenue) · Out: @string.Format("{0:C}", Model.TotalExpense)</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-6 col-md-3">
+            <div class="tile card">
+                <div class="tile-body">
+                    <div class="tile-number">@Model.JournalLinesCount</div>
+                    <div class="tile-label">Journal</div>
+                    <div class="tile-sub">Lines: @Model.JournalLinesCount</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-6 col-md-3">
+            <div class="tile card">
+                <div class="tile-body">
+                    <div class="tile-number">@Model.TaxRatesCount</div>
+                    <div class="tile-label">Tax Rates</div>
+                    <div class="tile-sub">Configured</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Collapsible sections similar to screenshot -->
+<div class="accordion" id="financialSections">
+    @* Accounts *@
+    <div class="accordion-item">
+        <h2 class="accordion-header" id="headingAccounts">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseAccounts" aria-expanded="false" aria-controls="collapseAccounts">
+                Accounts
+            </button>
+        </h2>
+        <div id="collapseAccounts" class="accordion-collapse collapse" aria-labelledby="headingAccounts" data-bs-parent="#financialSections">
+            <div class="accordion-body">
+                <p>Active accounts: @Model.AccountsCount</p>
+            </div>
+        </div>
+    </div>
+
+    @* Partners *@
+    <div class="accordion-item">
+        <h2 class="accordion-header" id="headingPartners">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapsePartners" aria-expanded="false" aria-controls="collapsePartners">
+                Partners
+            </button>
+        </h2>
+        <div id="collapsePartners" class="accordion-collapse collapse" aria-labelledby="headingPartners" data-bs-parent="#financialSections">
+            <div class="accordion-body">
+                <p>Customers: @Model.CustomersCount · Vendors: @Model.VendorsCount</p>
+            </div>
+        </div>
+    </div>
+
+    @* Tax Rates *@
+    <div class="accordion-item">
+        <h2 class="accordion-header" id="headingTax">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTax" aria-expanded="false" aria-controls="collapseTax">
+                Tax Rates
+            </button>
+        </h2>
+        <div id="collapseTax" class="accordion-collapse collapse" aria-labelledby="headingTax" data-bs-parent="#financialSections">
+            <div class="accordion-body">
+                <p>@Model.TaxRatesCount configured</p>
+            </div>
+        </div>
+    </div>
+
+    @* Invoices *@
+    <div class="accordion-item">
+        <h2 class="accordion-header" id="headingInvoices">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseInvoices" aria-expanded="false" aria-controls="collapseInvoices">
+                Invoices
+            </button>
+        </h2>
+        <div id="collapseInvoices" class="accordion-collapse collapse" aria-labelledby="headingInvoices" data-bs-parent="#financialSections">
+            <div class="accordion-body">
+                <p>Total invoices: @Model.InvoicesCount · Open AR: @string.Format("{0:C}", Model.OpenAR)</p>
+            </div>
+        </div>
+    </div>
+
+    @* Invoice Lines *@
+    <div class="accordion-item">
+        <h2 class="accordion-header" id="headingInvoiceLines">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseInvoiceLines" aria-expanded="false" aria-controls="collapseInvoiceLines">
+                Invoice Lines
+            </button>
+        </h2>
+        <div id="collapseInvoiceLines" class="accordion-collapse collapse" aria-labelledby="headingInvoiceLines" data-bs-parent="#financialSections">
+            <div class="accordion-body">
+                <p>Invoice line items are available in the invoice details.</p>
+            </div>
+        </div>
+    </div>
+
+    @* Payments *@
+    <div class="accordion-item">
+        <h2 class="accordion-header" id="headingPayments">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapsePayments" aria-expanded="false" aria-controls="collapsePayments">
+                Payments
+            </button>
+        </h2>
+        <div id="collapsePayments" class="accordion-collapse collapse" aria-labelledby="headingPayments" data-bs-parent="#financialSections">
+            <div class="accordion-body">
+                <p>Payments: @Model.PaymentsCount · In: @string.Format("{0:C}", Model.TotalRevenue)</p>
+            </div>
+        </div>
+    </div>
+
+    @* Journal Entries *@
+    <div class="accordion-item">
+        <h2 class="accordion-header" id="headingJournal">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseJournal" aria-expanded="false" aria-controls="collapseJournal">
+                Journal Entries
+            </button>
+        </h2>
+        <div id="collapseJournal" class="accordion-collapse collapse" aria-labelledby="headingJournal" data-bs-parent="#financialSections">
+            <div class="accordion-body">
+                <p>Journal lines: @Model.JournalLinesCount</p>
+            </div>
+        </div>
+    </div>
+
+    @* Journal Lines *@
+    <div class="accordion-item">
+        <h2 class="accordion-header" id="headingJournalLines">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseJournalLines" aria-expanded="false" aria-controls="collapseJournalLines">
+                Journal Lines
+            </button>
+        </h2>
+        <div id="collapseJournalLines" class="accordion-collapse collapse" aria-labelledby="headingJournalLines" data-bs-parent="#financialSections">
+            <div class="accordion-body">
+                <p>Detailed journal line listing is available in Transactions.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<hr />
+
+<h2>Transactions</h2>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Date</th>
+            <th>Description</th>
+            <th>Category</th>
+            <th class="text-right">Amount</th>
+            <th>Type</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model.Transactions.Any())
+        {
+            foreach (var tx in Model.Transactions)
+            {
+                <tr>
+                    <td>@tx.Date.ToString("yyyy-MM-dd")</td>
+                    <td>@tx.Description</td>
+                    <td>@tx.Category</td>
+                    <td class="text-right">@string.Format("{0:C}", tx.Amount)</td>
+                    <td>@(tx.IsExpense ? "Expense" : "Income")</td>
+                </tr>
+            }
+        }
+        else
+        {
+            <tr>
+                <td colspan="5">No transactions found.</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<hr />
+
+<h2>Add Transaction</h2>
+<form method="post">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+    <div class="mb-2">
+        <label>Date</label>
+        <input asp-for="InputTransaction.Date" class="form-control" type="date" />
+        <span asp-validation-for="InputTransaction.Date" class="text-danger"></span>
+    </div>
+
+    <div class="mb-2">
+        <label>Description</label>
+        <input asp-for="InputTransaction.Description" class="form-control" />
+        <span asp-validation-for="InputTransaction.Description" class="text-danger"></span>
+    </div>
+
+    <div class="mb-2">
+        <label>Category</label>
+        <input asp-for="InputTransaction.Category" class="form-control" list="categoriesList" />
+        <datalist id="categoriesList">
+            @foreach (var c in Model.Categories.Where(c => c != "All"))
+            {
+                <option value="@c" />
+            }
+        </datalist>
+        <span asp-validation-for="InputTransaction.Category" class="text-danger"></span>
+    </div>
+
+    <div class="mb-2">
+        <label>Amount</label>
+        <input asp-for="InputTransaction.Amount" class="form-control" />
+        <span asp-validation-for="InputTransaction.Amount" class="text-danger"></span>
+    </div>
+
+    <div class="mb-2 form-check">
+        <input asp-for="InputTransaction.IsExpense" class="form-check-input" />
+        <label class="form-check-label">Is Expense?</label>
+    </div>
+
+    <button type="submit" class="btn btn-success">Add Transaction</button>
+</form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
