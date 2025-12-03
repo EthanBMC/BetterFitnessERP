@@ -1,9 +1,13 @@
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using BetterFitnessERP.Models;
 
 namespace BetterFitnessERP.Data
 {
-    public class ApplicationDbContext : DbContext
+    // Use IdentityDbContext so Identity types (User, Roles, etc.) are mapped into your EF model.
+    // If you already have a different Identity DbContext in the project, merge the DbSets below into it instead of replacing.
+    public class ApplicationDbContext : IdentityDbContext<IdentityUser>
     {
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
