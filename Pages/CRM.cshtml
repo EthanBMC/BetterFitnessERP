@@ -1,0 +1,103 @@
+@page
+@model BetterFitnessERP.Pages.CRMModel
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+<h1>CRM</h1>
+
+@if (!string.IsNullOrEmpty(Model.StatusMessage))
+{
+    <div class="alert alert-success">@Model.StatusMessage</div>
+}
+
+<h2>Customers</h2>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Phone</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+    @foreach (var c in Model.Customers)
+    {
+        <tr>
+            <td>@(c.FirstName) @(c.LastName)</td>
+            <td>@c.Email</td>
+            <td>@c.Phone</td>
+            <td>
+                <a asp-page="./CRM" asp-route-handler="Details" asp-route-id="@c.Id" class="btn btn-sm btn-info">Details</a>
+                <a asp-page="./CRM" asp-route-handler="Edit" asp-route-id="@c.Id" class="btn btn-sm btn-primary">Edit</a>
+                <form method="post" asp-page-handler="Delete" style="display:inline-block;" onsubmit="return confirm('Delete this customer?');">
+                    <input type="hidden" name="id" value="@c.Id" />
+                    <button type="submit" class="btn btn-sm btn-danger">Delete</button>
+                </form>
+            </td>
+        </tr>
+    }
+    </tbody>
+</table>
+
+<hr />
+
+<h2>Create Customer</h2>
+<form method="post" asp-page-handler="Create">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <div class="form-group">
+        <label asp-for="Customer.FirstName"></label>
+        <input asp-for="Customer.FirstName" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label asp-for="Customer.LastName"></label>
+        <input asp-for="Customer.LastName" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label asp-for="Customer.Email"></label>
+        <input asp-for="Customer.Email" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label asp-for="Customer.Phone"></label>
+        <input asp-for="Customer.Phone" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label asp-for="Customer.Address"></label>
+        <input asp-for="Customer.Address" class="form-control" />
+    </div>
+    <button type="submit" class="btn btn-success">Create</button>
+</form>
+
+@if (Model.Customer != null && Model.Customer.Id > 0)
+{
+    <hr />
+    <h2>Edit Customer</h2>
+    <form method="post" asp-page-handler="Edit">
+        <input type="hidden" asp-for="Customer.Id" />
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div class="form-group">
+            <label asp-for="Customer.FirstName"></label>
+            <input asp-for="Customer.FirstName" class="form-control" />
+        </div>
+        <div class="form-group">
+            <label asp-for="Customer.LastName"></label>
+            <input asp-for="Customer.LastName" class="form-control" />
+        </div>
+        <div class="form-group">
+            <label asp-for="Customer.Email"></label>
+            <input asp-for="Customer.Email" class="form-control" />
+        </div>
+        <div class="form-group">
+            <label asp-for="Customer.Phone"></label>
+            <input asp-for="Customer.Phone" class="form-control" />
+        </div>
+        <div class="form-group">
+            <label asp-for="Customer.Address"></label>
+            <input asp-for="Customer.Address" class="form-control" />
+        </div>
+        <button type="submit" class="btn btn-primary">Save</button>
+    </form>
+}
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
